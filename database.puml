@@ -1,0 +1,55 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class User {
+    String id
+    String name
+    String email
+    String password
+}
+
+class Event {
+    String id
+    String name
+    String description
+    LocalDateTime createdAt
+}
+
+class Expense {
+    String id
+    Double amount
+    String description
+    LocalDateTime createdAt
+}
+
+class EventUser {
+    String id
+    Role role
+}
+
+class Payment {
+    String id
+    Double amount
+    LocalDateTime paidAt
+}
+
+enum Role {
+    OWNER
+    PARTICIPANT
+}
+
+' --- Event group ---
+User  "1"  }--|| "0..*" EventUser
+Event "1"  }--|| "1..*" EventUser
+
+' --- expenses ---
+Event  "1"  *-- "0..*" Expense      : contains
+User   "1"  -- "0..*" Expense      : payer/creator
+
+' --- payments ---
+Event   "1"  *-- "0..*" Payment
+User    "1"  -- "0..*" Payment     : payer
+Payment "0..*" -- "1" User         : receiver
+
+
+@enduml

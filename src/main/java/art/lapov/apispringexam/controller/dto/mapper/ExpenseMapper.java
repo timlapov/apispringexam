@@ -8,11 +8,11 @@ import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring", unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface ExpenseMapper {
-    @Mapping(source = "user.id", target = "userId")
+    @Mapping(source = "user.id", target = "payerId")
     @Mapping(source = "event.id", target = "eventId")
     ExpenseDto toDto(Expense expense);
 
-    @Mapping(source = "userId", target = "user.id")
-    @Mapping(source = "eventId", target = "event.id")
+    @Mapping(target = "user", ignore = true)
+    @Mapping(target = "event", ignore = true)
     Expense toEntity(ExpenseDto dto);
 }

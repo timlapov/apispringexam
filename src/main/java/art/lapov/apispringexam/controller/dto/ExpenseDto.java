@@ -20,7 +20,7 @@ public class ExpenseDto {
     private String description;
     private LocalDateTime createdAt;
     @NotBlank
-    private String userId;
+    private String payerId;
     @NotBlank
     private String eventId;
 }

@@ -20,13 +20,17 @@ import java.time.LocalDateTime;
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    String id;
-    Double amount;
-    LocalDateTime paidAt;
-    @ManyToOne
-    private Event event;
+    private String id;
+    private Double amount;
+    private LocalDateTime paidAt;
 
     @ManyToOne
-    private User user;
+    private User fromUser;
+
+    @ManyToOne
+    private User toUser;
+
+    @ManyToOne
+    private Event event;
 
 }

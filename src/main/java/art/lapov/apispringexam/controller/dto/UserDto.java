@@ -7,9 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.io.Serializable;
-import java.util.Objects;
-
 /**
  * DTO for {@link art.lapov.apispringexam.entity.User}
  */
@@ -25,5 +22,4 @@ public class UserDto {
     private String email;
     @NotBlank
     private String password;
-
 }

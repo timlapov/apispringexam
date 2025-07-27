@@ -10,6 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Objects;
+
 @Service
 public class UserService implements UserDetailsService {
     private UserRepository userRepository;
@@ -34,4 +36,26 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
+    public User update(User userToSave) {
+        if (!userRepository.findById(userToSave.getId()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        }
+        User userInRepo = userRepository.findById(userToSave.getId()).get();
+        
+        userInRepo.setEmail(userToSave.getEmail());
+        userInRepo.setPassword(passwordEncoder.encode(userToSave.getPassword()));
+        userInRepo.setName(userToSave.getName());
+        
+        User userUpdated = userRepository.save(userInRepo);
+        return userUpdated;
+    }
+
+    public void delete(String id) {
+        if (!userRepository.findById(id).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        }
+        User user = userRepository.findById(id).get();
+        userRepository.delete(user);
+    }
+
 }

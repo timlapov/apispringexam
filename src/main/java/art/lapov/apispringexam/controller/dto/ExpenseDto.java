@@ -9,6 +9,9 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+/**
+ * DTO for {@link art.lapov.apispringexam.entity.Expense}
+ */
 @Getter
 @Setter
 @NoArgsConstructor

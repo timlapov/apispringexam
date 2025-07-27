@@ -42,7 +42,7 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setToUser(toUser);
         payment.setAmount(paymentCreateDto.getAmount());
         payment.setEvent(event);
-        payment.setCreatedAt(LocalDateTime.now());
+        payment.setPaidAt(LocalDateTime.now());
 
         Payment savedPayment = paymentRepository.save(payment);
 

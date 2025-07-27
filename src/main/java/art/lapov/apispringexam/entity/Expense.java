@@ -20,13 +20,13 @@ import java.time.LocalDateTime;
 public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    public String id;
-    public Double amount;
-    public String description;
-    public java.time.LocalDateTime createdAt;
+    private String id;
+    private Double amount;
+    private String description;
+    private java.time.LocalDateTime createdAt;
     @ManyToOne
-    public Event event;
+    private Event event;
     @ManyToOne
-    public User user;
+    private User user;
 
 }

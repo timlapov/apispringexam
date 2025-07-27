@@ -8,6 +8,9 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * DTO for {@link art.lapov.apispringexam.entity.Event}
+ */
 @Getter
 @Setter
 @AllArgsConstructor

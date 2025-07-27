@@ -6,8 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
+/**
+ * DTO for creating a new event.
+ */
 @Setter
 @Getter
 @AllArgsConstructor
@@ -18,5 +19,4 @@ public class EventCreateDto {
     private String description;
     @NotBlank
     private String ownerId;
-    private List<String> participantIds;
 }

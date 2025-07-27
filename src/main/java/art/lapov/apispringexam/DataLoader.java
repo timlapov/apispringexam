@@ -216,31 +216,36 @@ public class DataLoader implements CommandLineRunner {
         bobPizzaPayment.setAmount(28.50);
         bobPizzaPayment.setPaidAt(java.time.LocalDateTime.now().minusDays(6));
         bobPizzaPayment.setEvent(pizzaNight);
-        bobPizzaPayment.setUser(bob);
+        bobPizzaPayment.setFromUser(bob);
+        bobPizzaPayment.setToUser(charlie);
 
         Payment charliePizzaPayment = new Payment();
         charliePizzaPayment.setAmount(28.50);
         charliePizzaPayment.setPaidAt(java.time.LocalDateTime.now().minusDays(6));
         charliePizzaPayment.setEvent(pizzaNight);
-        charliePizzaPayment.setUser(charlie);
+        charliePizzaPayment.setFromUser(charlie);
+        charliePizzaPayment.setToUser(alice);
 
         Payment aliceMoviePayment = new Payment();
-        aliceMoviePayment.setAmount(30.00);
+        aliceMoviePayment.setAmount(20.00);
         aliceMoviePayment.setPaidAt(java.time.LocalDateTime.now().minusDays(4));
         aliceMoviePayment.setEvent(movieTrip);
-        aliceMoviePayment.setUser(alice);
+        aliceMoviePayment.setFromUser(alice);
+        aliceMoviePayment.setToUser(emily);
 
         Payment emilyMoviePayment = new Payment();
         emilyMoviePayment.setAmount(30.00);
         emilyMoviePayment.setPaidAt(java.time.LocalDateTime.now().minusDays(4));
         emilyMoviePayment.setEvent(movieTrip);
-        emilyMoviePayment.setUser(emily);
+        emilyMoviePayment.setFromUser(emily);
+        emilyMoviePayment.setToUser(alice);
 
         Payment aliceWeekendPayment = new Payment();
         aliceWeekendPayment.setAmount(150.00);
         aliceWeekendPayment.setPaidAt(java.time.LocalDateTime.now().minusDays(2));
         aliceWeekendPayment.setEvent(weekendGetaway);
-        aliceWeekendPayment.setUser(alice);
+        aliceWeekendPayment.setFromUser(alice);
+        aliceWeekendPayment.setToUser(diana);
 
         paymentRepository.save(bobPizzaPayment);
         paymentRepository.save(charliePizzaPayment);

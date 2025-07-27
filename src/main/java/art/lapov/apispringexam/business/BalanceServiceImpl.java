@@ -2,6 +2,7 @@ package art.lapov.apispringexam.business;
 
 import art.lapov.apispringexam.controller.dto.DebtDto;
 import art.lapov.apispringexam.entity.Expense;
+import art.lapov.apispringexam.entity.Payment;
 import art.lapov.apispringexam.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,8 @@ import java.util.stream.Collectors;
 public class BalanceServiceImpl implements BalanceService {
 
     @Override
-    public List<DebtDto> calculate(List<User> participants, List<Expense> expenses) {
+    public List<DebtDto> calculate(List<User> participants, List<Expense> expenses, List<Payment> payments
+    ) {
         if (participants == null || participants.isEmpty()) {
             return new ArrayList<>();
         }
@@ -35,6 +37,11 @@ public class BalanceServiceImpl implements BalanceService {
 
         for (User participant : participants) {
             balance.put(participant.getId(), balance.get(participant.getId()) - perPersonShare);
+        }
+
+        for (Payment payment : payments) {
+            balance.put(payment.getFromUser().getId(), balance.get(payment.getFromUser().getId()) + payment.getAmount());
+            balance.put(payment.getToUser().getId(), balance.get(payment.getToUser().getId()) - payment.getAmount());
         }
 
         return settleDebts(balance, userIdToEmailMap);
@@ -81,4 +88,5 @@ public class BalanceServiceImpl implements BalanceService {
         }
         return debts;
     }
+
 }

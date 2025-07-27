@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,20 +19,21 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    String id;
-    String description;
-    String name;
-    LocalDateTime createdAt;
+    private String id;
+    private String description;
+    private String name;
+    private LocalDateTime createdAt;
     @OneToMany(mappedBy = "event", fetch = FetchType.EAGER)
-    List<EventUser> participants = new ArrayList<>();
+    private List<EventUser> participants = new ArrayList<>();
 
     @OneToMany(mappedBy = "event")
-    List<Payment> payments = new ArrayList<>();
+    private List<Payment> payments = new ArrayList<>();
 
     @OneToMany(mappedBy = "event")
-    List<Expense> expenses = new ArrayList<>();
+    private List<Expense> expenses = new ArrayList<>();
 
 }

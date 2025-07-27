@@ -41,18 +41,6 @@ public class EventServiceImpl implements EventService {
                 new EventUserId(event.getId(), owner.getId()),
                 owner, event, Role.OWNER));
 
-        if (dto.getParticipantIds() != null) {
-            Event finalEvent = event;
-            dto.getParticipantIds().stream()
-                    .filter(id -> !id.equals(owner.getId()))
-                    .distinct()
-                    .map(pid -> userRepository.findById(pid)
-                            .orElseThrow(() -> new IllegalArgumentException("User " + pid + " not found")))
-                    .forEach(u -> euRepository.save(new EventUser(
-                            new EventUserId(finalEvent.getId(), u.getId()),
-                            u, finalEvent, Role.PARTICIPANT)));
-        }
-
         Event savedEvent = eventRepository.findById(event.getId())
                 .orElseThrow(() -> new IllegalArgumentException("Event not found after creation"));
         return eventMapper.toDto(savedEvent);
@@ -79,13 +67,15 @@ public class EventServiceImpl implements EventService {
 
         List<User> participants = event.getParticipants().stream()
                 .map(EventUser::getUser)
-                .collect(Collectors.toList());
+                .toList();
 
         List<Expense> expenses = event.getExpenses();
 
-        List<DebtDto> debts = balanceService.calculate(participants, expenses);
+        List<DebtDto> debts = balanceService.calculate(participants, expenses, event.getPayments());
         double totalExpenses = expenses.stream().mapToDouble(Expense::getAmount).sum();
 
         return new BalanceDto(debts, totalExpenses);
     }
+
+
 }

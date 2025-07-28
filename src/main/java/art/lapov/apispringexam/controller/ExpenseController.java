@@ -26,10 +26,10 @@ public class ExpenseController {
     @GetMapping
     public ResponseEntity<List<ExpenseDto>> getExpenses(
             @PathVariable String eventId,
-            @RequestParam(required = false) String payerId,
+            @RequestParam(required = false) String email,
             @RequestParam(required = false) Double amount_gt,
             @RequestParam(required = false) Double amount_lt) {
-        List<ExpenseDto> expenses = expenseService.getExpenses(eventId, payerId, amount_gt, amount_lt);
+        List<ExpenseDto> expenses = expenseService.getExpenses(eventId, email, amount_gt, amount_lt);
         return ResponseEntity.ok(expenses);
     }
 }

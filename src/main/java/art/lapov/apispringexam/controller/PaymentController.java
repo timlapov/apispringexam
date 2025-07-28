@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/payments")
@@ -18,8 +20,14 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @PostMapping
-    public ResponseEntity<PaymentDto> createPayment(@RequestBody PaymentCreateDto paymentCreateDto) {
+    public ResponseEntity<Map<String, String>> createPayment(@RequestBody PaymentCreateDto paymentCreateDto) {
         PaymentDto paymentDto = paymentService.createPayment(paymentCreateDto);
-        return ResponseEntity.ok(paymentDto);
+        Map<String, String> response = Map.of(
+                "id", paymentDto.getId(),
+                "amount", paymentDto.getAmount().toString()
+        );
+        return ResponseEntity
+                .ok()
+                .body(response);
     }
 }

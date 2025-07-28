@@ -13,5 +13,5 @@ public interface ExpenseService {
     ExpenseDto createExpense(String eventId, ExpenseCreateDto expenseCreateDto);
 
     @Transactional(readOnly = true)
-    List<ExpenseDto> getExpenses(String eventId, String payerId, Double amountGt, Double amountLt);
+    List<ExpenseDto> getExpenses(String eventId, String email, Double amountGt, Double amountLt);
 }

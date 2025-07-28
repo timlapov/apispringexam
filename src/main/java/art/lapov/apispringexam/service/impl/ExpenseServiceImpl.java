@@ -49,12 +49,12 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<ExpenseDto> getExpenses(String eventId, String payerId, Double amountGt, Double amountLt) {
+    public List<ExpenseDto> getExpenses(String eventId, String email, Double amountGt, Double amountLt) {
         List<Expense> expenses = expenseRepository.findByEventId(eventId);
         Stream<Expense> stream = expenses.stream();
 
-        if (payerId != null) {
-            stream = stream.filter(e -> e.getUser().getId().equals(payerId));
+        if (email != null) {
+            stream = stream.filter(e -> e.getUser().getEmail().equals(email));
         }
         if (amountGt != null) {
             stream = stream.filter(e -> e.getAmount().compareTo(amountGt) > 0);
@@ -65,6 +65,6 @@ public class ExpenseServiceImpl implements ExpenseService {
 
         return stream
                 .map(expenseMapper::toDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

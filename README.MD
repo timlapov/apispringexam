@@ -59,7 +59,7 @@ The project follows a standard layered architecture:
     java -jar target/apispringexam-0.0.1-SNAPSHOT.jar
     ```
 
-The application will be available at `http://localhost:8080`.
+The application will be available at `http://localhost:8081`.
 
 ## API Endpoints
 
@@ -70,18 +70,17 @@ The application will be available at `http://localhost:8080`.
     ```bash
     curl -X POST http://localhost:8081/api/users/add \
          -H "Content-Type: application/json" \
-         -d '{'''
+         -d '{
            "name": "John Doe",
            "email": "john.doe@example.com",
            "password": "password123"
-         }'''
+         }'
     ```
 
 *   **Get user by email**
 
     ```bash
-    curl -X GET http://localhost:8081/api/users/john.doe@example.com \
-         -u john.doe@example.com:password123
+    curl -X GET http://localhost:8081/api/users/john.doe@example.com
     ```
 
 *   **Update a user**
@@ -89,19 +88,17 @@ The application will be available at `http://localhost:8080`.
     ```bash
     curl -X POST http://localhost:8081/api/users/update/{userId} \
          -H "Content-Type: application/json" \
-         -u john.doe@example.com:password123 \
-         -d '{'''
+         -d '{
            "name": "Johnathan Doe",
            "email": "john.doe@example.com",
            "password": "newpassword123"
-         }'''
+         }'
     ```
 
 *   **Delete a user**
 
     ```bash
-    curl -X DELETE http://localhost:8081/api/users/delete/{userId} \
-         -u john.doe@example.com:password123
+    curl -X DELETE http://localhost:8081/api/users/delete/{userId}
     ```
 
 ### Events
@@ -111,22 +108,17 @@ The application will be available at `http://localhost:8080`.
     ```bash
     curl -X POST http://localhost:8081/api/events/add \
          -H "Content-Type: application/json" \
-         -u john.doe@example.com:password123 \
-         -d '{'''
+         -d '{
            "name": "Trip to Paris",
            "description": "A weekend trip to Paris with friends.",
-           "participants": [
-             "john.doe@example.com",
-             "jane.doe@example.com"
-           ]
-         }'''
+           "ownerId": "{ownerId}"
+         }'
     ```
 
 *   **Get event balance**
 
     ```bash
-    curl -X GET http://localhost:8081/api/events/{eventId}/balance \
-         -u john.doe@example.com:password123
+    curl -X GET http://localhost:8081/api/events/{eventId}/balance
     ```
 
 ### Expenses
@@ -134,21 +126,24 @@ The application will be available at `http://localhost:8080`.
 *   **Add an expense to an event**
 
     ```bash
-    curl -X POST http://localhost:8081/api/events/{eventId}/expenses \
-         -H "Content-Type: application/json" \
-         -u john.doe@example.com:password123 \
-         -d '{'''
-           "amount": 50.0,
-           "description": "Train tickets",
-           "payerId": "john.doe@example.com"
-         }'''
+    curl -X POST http://localhost:8081/api/users/add \
+        -H "Content-Type: application/json" \
+        -d '{
+            "name": "John Doe",
+            "email": "john.doe@example.com",
+            "password": "password123"
+      }'
+
     ```
 
 *   **Get expenses for an event**
-
+    This command fetches a list of expenses for a specific event, filtered by several criteria:
+* •.../events/{eventId}/expenses: The main path to get expenses for a specific event ID.
+* •?email=...: A query parameter to filter expenses by the person who paid (payer).
+* •&amount_gt=20: A filter to get expenses where the amount is "greater than" 20.
+* •&amount_lt=100: A filter to get expenses where the amount is "less than" 100.
     ```bash
-    curl -X GET "http://localhost:8081/api/events/{eventId}/expenses?payerId=john.doe@example.com&amount_gt=20" \
-         -u john.doe@example.com:password123
+    curl -X GET "http://localhost:8081/api/events/0af089ee-11a7-4703-9839-0a00a5b2f79b/expenses?email=diana@example.com&amount_gt=20&amount_lt=100"
     ```
 
 ### Payments
@@ -159,10 +154,10 @@ The application will be available at `http://localhost:8080`.
     curl -X POST http://localhost:8081/api/payments \
          -H "Content-Type: application/json" \
          -u jane.doe@example.com:password123 \
-         -d '{'''
+         -d '{
            "eventId": "{eventId}",
-           "fromUserId": "jane.doe@example.com",
-           "toUserId": "john.doe@example.com",
+           "fromUserId": "{userId}",
+           "toUserId": "{userId}",
            "amount": 25.0
-         }'''
+         }'
     ```
